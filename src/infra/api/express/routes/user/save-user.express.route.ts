@@ -30,12 +30,25 @@ export class SaveUserRoute implements Route {
         password,
       };
 
-      const output: SaveUserResponseDto =
-        await this.saveUserService.execute(input);
+      try {
+        const output: SaveUserResponseDto = 
+          await this.saveUserService.execute(input);
 
-      const responseBody = this.present(output);
+        const responseBody = this.present(output);
 
-      response.status(201).json(responseBody).send();
+        response.status(201).json(responseBody).send();
+      } catch(errorCatched) {
+        let errorMessage: string = "Unknown error"
+
+        if(errorCatched instanceof Error) {
+          errorMessage = errorCatched.message;
+        }
+
+        response.status(400).json({
+          error: "Error",
+          message: errorMessage,
+        }).send();
+      }
     };
   }
 

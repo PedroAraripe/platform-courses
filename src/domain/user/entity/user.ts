@@ -9,7 +9,9 @@
 // VALIDACAO DE CAMPOS
 
 export class User {
-  private constructor(private readonly props: UserProps) {}
+  private constructor(private readonly props: UserProps) {
+    this.validate();
+  }
 
   public static create(name: string, password: string) {
     return new User({
@@ -42,6 +44,28 @@ export class User {
 
   static generateHashPassword(password:string ) {
     return password;
+  }
+
+  private validate() {
+    const errors = [];
+
+    if(!this.props.name) {
+      errors.push("Name is required!");
+    }
+
+    if(!this.props.password) {
+      errors.push("Password  is required!");
+    }
+
+    // TODO
+    // CONCLUIR CASOS DE PREENCHIMENTO NORMAL E BUSCAS NORMAIS E DEPOIS FAZER ABAIXO
+    // VER VIDEO SOBRE ERROR HANDLING EM APIS NODE E IMPLEMENTAR NAS OUTRAS ROTAS
+    // VER VIDEO DE IMPLEMENTAÇÃO DE TESTES BÁSICO PARA APLICAÇÕES NODE
+    // VER VIDEO DE IMPLEMENTAÇÃO DE HASH PASSWORD NO EXPRESS
+
+    if(errors.length) {
+      throw new Error(errors.join(" "));
+    }
   }
 
 }

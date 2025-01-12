@@ -10,24 +10,29 @@ export class UserRepositoryPrisma implements UserGateway {
   }
 
   public async save(user: User): Promise<void> {
-      const data = {
-        id: user.id,
-        name: user.name,
-        password: user.password,
-        createdAt: user.createdAt,
-      }
+    const data = {
+      id: user.id,
+      name: user.name,
+      password: user.password,
+      createdAt: user.createdAt,
+    }
 
-      await this.prismaClient.user.create({ data });
+    await this.prismaClient.users.create({ data });
   }
 
   public async findById(id: string): Promise<User> {
-      const foundUser = await this.prismaClient.user.findUnique({where: { id }})
+    const foundUser = await this.prismaClient.users.findUnique({where: { id }})
 
-      if(!foundUser) {
-       throw Error("User not found");
-      }
+    if(!foundUser) {
+      throw Error("User not found");
+    }
 
+    return User.with(foundUser);
+  }
 
-      return User.with(foundUser);
+  public async findAll(): Promise<User[]> {
+    const foundUsers = await this.prismaClient.users.findMany()
+
+    return foundUsers.map(userFound => User.with(userFound));
   }
 }
