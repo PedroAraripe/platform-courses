@@ -1,25 +1,26 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
-import { FindByIdUserUsecase } from "../../../../../usecases/user/find-by-id/find-by-id-user.usecase";
+import { FindByIdCourseUsecase } from "../../../../../usecases/course/find-by-id/find-by-id-course.usecase";
 
-export type FindByIdUserResponseDto = {
-  name: String,
+export type FindByIdCourseResponseDto = {
+  title: String,
+  description: String,
   id: String,
   createdAt: Date,
 };
 
-export class FindByIdUserRoute implements Route {
+export class FindByIdCourseRoute implements Route {
   private constructor(
     private readonly path: string,
     private readonly method: HttpMethod,
-    private readonly findByIdUserService: FindByIdUserUsecase
+    private readonly findByIdCourseService: FindByIdCourseUsecase
   ) {}
 
-  public static create(findByIdUserService: FindByIdUserUsecase) {
-    return new FindByIdUserRoute(
-      "/users/:id",
+  public static create(findByIdCourseService: FindByIdCourseUsecase) {
+    return new FindByIdCourseRoute(
+      "/courses/:id",
       HttpMethod.GET,
-      findByIdUserService
+      findByIdCourseService
     );
   }
 
@@ -27,8 +28,8 @@ export class FindByIdUserRoute implements Route {
     return async (request: Request, response: Response) => {
       const { id } = request.params;
 
-      const output: FindByIdUserResponseDto =
-        await this.findByIdUserService.execute({ id });
+      const output: FindByIdCourseResponseDto =
+        await this.findByIdCourseService.execute({ id });
 
       const responseBody = this.present(output);
 
@@ -44,10 +45,11 @@ export class FindByIdUserRoute implements Route {
     return this.method;
   }
 
-  private present(input: FindByIdUserResponseDto): FindByIdUserResponseDto {
+  private present(input: FindByIdCourseResponseDto): FindByIdCourseResponseDto {
     const response = {
       id: input.id,
-      name: input.name,
+      title: input.title,
+      description: input.description,
       createdAt: input.createdAt,
     };
   

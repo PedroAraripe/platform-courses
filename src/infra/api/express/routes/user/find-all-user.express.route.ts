@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
-import { FindAllUserUsecase } from "../../../../../usecases/user/find-all/find-all.usecase";
+import { FindAllUserUsecase } from "../../../../../usecases/user/find-all/find-all-user.usecase";
 
 export type FindAllUserResponseDto = {
   name: String,
