@@ -6,6 +6,8 @@
   createdAt: Date,
 }
 
+export type CoursePublicDto = CourseProps;
+
 export class Course {
   private constructor(private readonly props: CourseProps) {
     this.validate();
@@ -43,6 +45,16 @@ export class Course {
 
   public get createdAt() {
     return this.props.createdAt;
+  }
+
+  public publicDto(): CoursePublicDto {
+    return {
+      id: this.id,
+      title: this.title,
+      createdAt: this.createdAt,
+      description: this.description,
+      hours: this.hours,
+    };
   }
 
   private validate() {}

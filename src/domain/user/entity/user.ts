@@ -4,6 +4,12 @@
   id: string,
   createdAt: Date
 }
+
+ export type UserPublicDto = {
+  name: string,
+  id: string,
+  createdAt: Date
+}
 // TODO
 // ADICIONAR HASH NO LUGAR DA SENHA
 // VALIDACAO DE CAMPOS
@@ -44,6 +50,14 @@ export class User {
 
   static generateHashPassword(password:string ) {
     return password;
+  }
+
+  publicDto(): UserPublicDto {
+    return {
+      id: this.id,
+      name: this.name,
+      createdAt: this.createdAt,
+    };
   }
 
   private validate() {
