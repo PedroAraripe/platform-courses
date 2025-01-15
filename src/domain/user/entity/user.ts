@@ -1,4 +1,6 @@
- export type UserProps = {
+import { PasswordHasher } from "../../../infra/cryptography/password-hasher";
+
+export type UserProps = {
   name: string,
   password: string,
   id: string,
@@ -19,11 +21,11 @@ export class User {
     this.validate();
   }
 
-  public static create(name: string, password: string) {
+  public static async create(name: string, password: string) {
     return new User({
       id: crypto.randomUUID().toString(),
       name,
-      password: User.generateHashPassword(password),
+      password: await User.generateHashPassword(password),
       createdAt: new Date(),
     })
   }
@@ -48,8 +50,8 @@ export class User {
     return this.props.createdAt;
   }
 
-  static generateHashPassword(password:string ) {
-    return password;
+  static async generateHashPassword(password:string ) {
+    return await PasswordHasher.hash(password);
   }
 
   publicDto(): UserPublicDto {
@@ -70,12 +72,6 @@ export class User {
     if(!this.props.password) {
       errors.push("Password  is required!");
     }
-
-    // TODO
-    // CONCLUIR CASOS DE PREENCHIMENTO NORMAL E BUSCAS NORMAIS E DEPOIS FAZER ABAIXO
-    // VER VIDEO SOBRE ERROR HANDLING EM APIS NODE E IMPLEMENTAR NAS OUTRAS ROTAS
-    // VER VIDEO DE IMPLEMENTAÇÃO DE TESTES BÁSICO PARA APLICAÇÕES NODE
-    // VER VIDEO DE IMPLEMENTAÇÃO DE HASH PASSWORD NO EXPRESS
 
     if(errors.length) {
       throw new Error(errors.join(" "));
