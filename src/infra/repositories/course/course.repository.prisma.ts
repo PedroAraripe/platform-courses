@@ -31,6 +31,22 @@ export class CourseRepositoryPrisma implements CourseGateway {
     return Course.with(foundCourse);
   }
 
+  public async findByTitle(title: string): Promise<Course[]> {
+    const foundCourses = await this.prismaClient.courses.findMany({
+      where: {
+        title: {
+          contains: title,
+        }
+      }
+    })
+
+    if(!foundCourses.length) {
+      throw Error("Course not found");
+    }
+
+    return foundCourses.map(foundCourse => Course.with(foundCourse));
+  }
+
   public async findAll(): Promise<Course[]> {
     const foundCourses = await this.prismaClient.courses.findMany()
 

@@ -18,7 +18,7 @@ export class SaveUserUsecase implements Usecase<SaveUserInputDto, SaveUserOutput
   }
 
   async execute({name, password}: SaveUserInputDto): Promise<SaveUserOutputDto> {
-      const localUser = User.create(name, password);
+      const localUser = await User.create(name, password);
 
       await this.userGateway.save(localUser);
 

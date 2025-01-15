@@ -30,6 +30,22 @@ export class UserRepositoryPrisma implements UserGateway {
     return User.with(foundUser);
   }
 
+  public async findByName(name: string): Promise<User[]> {
+    const foundUsers = await this.prismaClient.users.findMany({
+      where: {
+        name: {
+          contains: name,
+        }
+      }
+    })
+
+    if(!foundUsers.length) {
+      throw Error("User not found");
+    }
+
+    return foundUsers.map(foundUser => User.with(foundUser));
+  }
+
   public async findAll(): Promise<User[]> {
     const foundUsers = await this.prismaClient.users.findMany()
 
