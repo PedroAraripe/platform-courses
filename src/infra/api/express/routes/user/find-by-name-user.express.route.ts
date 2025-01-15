@@ -6,6 +6,7 @@ export type FindByNameUserResponseDto = {
   id: String,
   name: String,
   createdAt: Date,
+  email: string,
 }[];
 
 export class FindByNameUserRoute implements Route {
@@ -48,6 +49,7 @@ export class FindByNameUserRoute implements Route {
     return inputs.map(input => ({
       id: input.id,
       name: input.name,
+      email: input.email,
       createdAt: input.createdAt,
     }));
   }

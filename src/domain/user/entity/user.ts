@@ -1,8 +1,10 @@
 import { PasswordHasher } from "../../../infra/cryptography/password-hasher";
+import { ValidationError, ValidationErrorDetail } from "../../../shared/errors/ValidationError";
 
 export type UserProps = {
   name: string,
   password: string,
+  email: string,
   id: string,
   createdAt: Date
 }
@@ -12,20 +14,20 @@ export type UserProps = {
   id: string,
   createdAt: Date
 }
-// TODO
-// ADICIONAR HASH NO LUGAR DA SENHA
-// VALIDACAO DE CAMPOS
 
 export class User {
   private constructor(private readonly props: UserProps) {
     this.validate();
   }
 
-  public static async create(name: string, password: string) {
+  // todo separar essa logica do validate pro domain/validations/
+
+  public static async create(name: string, password: string, email: string) {
     return new User({
       id: crypto.randomUUID().toString(),
       name,
-      password: await User.generateHashPassword(password),
+      email,
+      password: password ? await User.generateHashPassword(password) : password,
       createdAt: new Date(),
     })
   }
@@ -40,6 +42,10 @@ export class User {
 
   public get password() {
     return this.props.password;
+  }
+
+  public get email() {
+    return this.props.email;
   }
 
   public get id() {
@@ -63,19 +69,31 @@ export class User {
   }
 
   private validate() {
-    const errors = [];
+    const errorsDetails: ValidationErrorDetail[] = [];
 
     if(!this.props.name) {
-      errors.push("Name is required!");
+      errorsDetails.push({
+        field: "Name",
+        message: "Name is required"
+      });
     }
 
     if(!this.props.password) {
-      errors.push("Password  is required!");
+      errorsDetails.push({
+        field: "Password",
+        message: "Password is required"
+      });
     }
 
-    if(errors.length) {
-      throw new Error(errors.join(" "));
+    if(!this.props.email) {
+      errorsDetails.push({
+        field: "Email",
+        message: "Email is required"
+      });
+    }
+
+    if(errorsDetails.length) {
+      throw new ValidationError("Certain fields are empty", errorsDetails)
     }
   }
-
 }

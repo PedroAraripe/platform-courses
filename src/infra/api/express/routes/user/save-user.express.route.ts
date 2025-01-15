@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { SaveUserInputDto, SaveUserUsecase } from "../../../../../usecases/user/save/save-user.usecase";
 import { HttpMethod, Route } from "../route";
+import { ValidationError } from "../../../../../shared/errors/ValidationError";
 
 export type SaveUserResponseDto = {
   id: string;
@@ -23,11 +24,16 @@ export class SaveUserRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const { name, password } = request.body;
+      const {
+        name,
+        password,
+        email
+      } = request.body;
 
       const input: SaveUserInputDto = {
         name,
         password,
+        email,
       };
 
       try {
@@ -44,10 +50,16 @@ export class SaveUserRoute implements Route {
           errorMessage = errorCatched.message;
         }
 
-        response.status(400).json({
-          error: "Error",
-          message: errorMessage,
-        }).send();
+        if(errorCatched instanceof ValidationError) {
+          response.status(errorCatched.statusCode).json(
+            errorCatched.toJSON()
+          ).send();
+        } else {
+          response.status(400).json({
+            error: "Error",
+            message: errorMessage,
+          }).send();
+        }
       }
     };
   }

@@ -10,6 +10,7 @@ export type FindUserOutputDto = {
   name: string,
   id: string,
   createdAt: Date,
+  email: string,
 };
 
 export class FindByIdUserUsecase implements Usecase<FindUserInputDto, FindUserOutputDto> {
@@ -32,6 +33,7 @@ export class FindByIdUserUsecase implements Usecase<FindUserInputDto, FindUserOu
     return {
       id: user.id,
       name: user.name,
+      email: user.email,
       createdAt: user.createdAt,
     }
   }

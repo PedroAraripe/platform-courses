@@ -10,6 +10,7 @@ datasource db {
 model Users {
   id          String     @id
   name        String
+  email       String
   password    String
   createdAt   DateTime   @default(now())   @map("created_at")
 

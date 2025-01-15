@@ -9,6 +9,7 @@ export type FindUserInputDto = {
 export type FindUserOutputDto = {
   name: string,
   id: string,
+  email: string,
   createdAt: Date,
 }[];
 
@@ -31,6 +32,7 @@ export class FindByNameUserUsecase implements Usecase<FindUserInputDto, FindUser
     return users.map(user => ({
       id: user.id,
       name: user.name,
+      email: user.email,
       createdAt: user.createdAt,
     }));
   }

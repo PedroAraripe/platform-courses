@@ -3,6 +3,7 @@ import { HttpMethod, Route } from "../route";
 import { FindAllUserUsecase } from "../../../../../usecases/user/find-all/find-all-user.usecase";
 
 export type FindAllUserResponseDto = {
+  email: String,
   name: String,
   id: String,
   createdAt: Date,
@@ -47,6 +48,7 @@ export class FindAllUserRoute implements Route {
       id: user.id,
       name: user.name,
       createdAt: user.createdAt,
+      email: user.email,
     }));
   }
 }

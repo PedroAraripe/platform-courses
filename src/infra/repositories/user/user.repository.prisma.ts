@@ -14,6 +14,7 @@ export class UserRepositoryPrisma implements UserGateway {
       id: user.id,
       name: user.name,
       password: user.password,
+      email: user.email,
       createdAt: user.createdAt,
     }
 

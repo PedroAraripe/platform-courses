@@ -4,6 +4,7 @@ import { FindByIdUserUsecase } from "../../../../../usecases/user/find-by-id/fin
 
 export type FindByIdUserResponseDto = {
   name: String,
+  email: String,
   id: String,
   createdAt: Date,
 };
@@ -49,6 +50,7 @@ export class FindByIdUserRoute implements Route {
       id: input.id,
       name: input.name,
       createdAt: input.createdAt,
+      email: input.email,
     };
   
     return response;

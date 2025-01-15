@@ -4,6 +4,7 @@ import { Usecase } from "../../usecase";
 
 export type SaveUserInputDto = {
   name: string,
+  email: string;
   password: string;
 };
 export type SaveUserOutputDto = {
@@ -17,8 +18,8 @@ export class SaveUserUsecase implements Usecase<SaveUserInputDto, SaveUserOutput
     return new SaveUserUsecase(userGateway);
   }
 
-  async execute({name, password}: SaveUserInputDto): Promise<SaveUserOutputDto> {
-      const localUser = await User.create(name, password);
+  async execute({name, password, email}: SaveUserInputDto): Promise<SaveUserOutputDto> {
+      const localUser = await User.create(name, password, email);
 
       await this.userGateway.save(localUser);
 

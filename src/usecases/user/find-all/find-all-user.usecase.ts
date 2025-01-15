@@ -6,6 +6,7 @@ export type FindUserOutputDto = {
   name: string,
   id: string,
   createdAt: Date,
+  email: string,
 }[];
 
 export class FindAllUserUsecase implements Usecase<void, FindUserOutputDto> {
@@ -26,6 +27,7 @@ export class FindAllUserUsecase implements Usecase<void, FindUserOutputDto> {
   private presentOutput(users: User[]) : FindUserOutputDto {
     return users.map(user => ({
       id: user.id,
+      email: user.email,
       name: user.name,
       createdAt: user.createdAt,
     }))
