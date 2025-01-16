@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
 import { FindByTitleCourseUsecase } from "../../../../../usecases/course/find-by-title/find-by-title-course.usecase";
+import { RequiredSeachFindByValidation } from "../../../../../shared/validations/required-search-find-by.validation";
+import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindByTitleCourseResponseDto = {
   id: String,
@@ -18,7 +20,7 @@ export class FindByTitleCourseRoute implements Route {
 
   public static create(findByTitleCourseService: FindByTitleCourseUsecase) {
     return new FindByTitleCourseRoute(
-      "/courses/search/:title",
+      "/courses-search/:title?",
       HttpMethod.GET,
       findByTitleCourseService
     );
@@ -26,19 +28,24 @@ export class FindByTitleCourseRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const { title } = request.params;
-
-      const output: FindByTitleCourseResponseDto =
-        await this.findByTitleCourseService.execute({ title });
-
-      const responseBody = this.present(output);
-
-      response.status(200).json(responseBody).send();
+      try {
+        const { title } = request.params;
+        RequiredSeachFindByValidation.validate(title);
+  
+        const output: FindByTitleCourseResponseDto =
+          await this.findByTitleCourseService.execute({ title });
+  
+        const responseBody = this.present(output);
+  
+        response.status(200).json(responseBody).send();
+      } catch(errorCatched) {
+        GenericRouteErrorHandling.handle(response, errorCatched);
+      }
     };
   }
 
   public getPath(): string {
-      return this.path;
+    return this.path;
   }
 
   public getMethod(): HttpMethod {

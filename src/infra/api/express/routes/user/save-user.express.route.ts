@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { SaveUserInputDto, SaveUserUsecase } from "../../../../../usecases/user/save/save-user.usecase";
 import { HttpMethod, Route } from "../route";
-import { ValidationError } from "../../../../../shared/errors/ValidationError";
+import { ValidationError } from "../../../../../shared/errors/validation.error";
+import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type SaveUserResponseDto = {
   id: string;
@@ -24,19 +25,19 @@ export class SaveUserRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const {
-        name,
-        password,
-        email
-      } = request.body;
-
-      const input: SaveUserInputDto = {
-        name,
-        password,
-        email,
-      };
-
       try {
+        const {
+          name,
+          password,
+          email
+        } = request.body;
+        
+        const input: SaveUserInputDto = {
+          name,
+          password,
+          email,
+        };
+        
         const output: SaveUserResponseDto = 
           await this.saveUserService.execute(input);
 
@@ -44,22 +45,7 @@ export class SaveUserRoute implements Route {
 
         response.status(201).json(responseBody).send();
       } catch(errorCatched) {
-        let errorMessage: string = "Unknown error"
-
-        if(errorCatched instanceof Error) {
-          errorMessage = errorCatched.message;
-        }
-
-        if(errorCatched instanceof ValidationError) {
-          response.status(errorCatched.statusCode).json(
-            errorCatched.toJSON()
-          ).send();
-        } else {
-          response.status(400).json({
-            error: "Error",
-            message: errorMessage,
-          }).send();
-        }
+        GenericRouteErrorHandling.handle(response, errorCatched);
       }
     };
   }

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
 import { FindByIdCourseUsecase } from "../../../../../usecases/course/find-by-id/find-by-id-course.usecase";
+import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindByIdCourseResponseDto = {
   title: String,
@@ -26,14 +27,18 @@ export class FindByIdCourseRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const { id } = request.params;
+      try {
+        const { id } = request.params;
 
-      const output: FindByIdCourseResponseDto =
-        await this.findByIdCourseService.execute({ id });
+        const output: FindByIdCourseResponseDto =
+          await this.findByIdCourseService.execute({ id });
 
-      const responseBody = this.present(output);
+        const responseBody = this.present(output);
 
-      response.status(200).json(responseBody).send();
+        response.status(200).json(responseBody).send();
+      } catch(errorCatched) {
+        GenericRouteErrorHandling.handle(response, errorCatched);
+      }
     };
   }
 

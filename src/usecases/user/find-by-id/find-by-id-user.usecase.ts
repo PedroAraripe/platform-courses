@@ -1,10 +1,7 @@
 import { User } from "../../../domain/user/entity/user";
 import { UserGateway } from "../../../domain/user/gateway/user.gateway";
+import { FindByIdPayload } from "../../../shared/types/find-by-id-payload.type";
 import { Usecase } from "../../usecase";
-
-export type FindUserInputDto = {
-  id: string;
-};
 
 export type FindUserOutputDto = {
   name: string,
@@ -13,14 +10,14 @@ export type FindUserOutputDto = {
   email: string,
 };
 
-export class FindByIdUserUsecase implements Usecase<FindUserInputDto, FindUserOutputDto> {
+export class FindByIdUserUsecase implements Usecase<FindByIdPayload, FindUserOutputDto> {
   private constructor(private readonly userGateway: UserGateway) {}
 
   public static create(userGateway: UserGateway) {
     return new FindByIdUserUsecase(userGateway);
   }
 
-  async execute({ id }: FindUserInputDto): Promise<FindUserOutputDto> {
+  async execute({ id }: FindByIdPayload): Promise<FindUserOutputDto> {
       const userFound = await this.userGateway.findById(id);
 
       const output: FindUserOutputDto = this.presentOutput(userFound);

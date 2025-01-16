@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { User } from "../../../domain/user/entity/user";
 import { UserGateway } from "../../../domain/user/gateway/user.gateway";
+import { NotFoundError } from "../../../shared/errors/not-found.error";
 
 export class UserRepositoryPrisma implements UserGateway {
   constructor(private readonly prismaClient: PrismaClient) {}
@@ -25,7 +26,7 @@ export class UserRepositoryPrisma implements UserGateway {
     const foundUser = await this.prismaClient.users.findUnique({where: { id }})
 
     if(!foundUser) {
-      throw Error("User not found");
+      throw new NotFoundError("User"); 
     }
 
     return User.with(foundUser);
@@ -41,7 +42,7 @@ export class UserRepositoryPrisma implements UserGateway {
     })
 
     if(!foundUsers.length) {
-      throw Error("User not found");
+      throw new NotFoundError("Users"); 
     }
 
     return foundUsers.map(foundUser => User.with(foundUser));

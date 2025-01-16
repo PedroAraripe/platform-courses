@@ -1,10 +1,7 @@
 import { Course } from "../../../domain/course/entity/course";
 import { CourseGateway } from "../../../domain/course/gateway/course.gateway";
+import { FindByIdPayload } from "../../../shared/types/find-by-id-payload.type";
 import { Usecase } from "../../usecase";
-
-export type FindCourseInputDto = {
-  id: string
-};
 
 export type FindCourseOutputDto = {
   id: string,
@@ -13,14 +10,14 @@ export type FindCourseOutputDto = {
   createdAt: Date,
 };
 
-export class FindByIdCourseUsecase implements Usecase<FindCourseInputDto, FindCourseOutputDto> {
+export class FindByIdCourseUsecase implements Usecase<FindByIdPayload, FindCourseOutputDto> {
   private constructor(private readonly courseGateway: CourseGateway) {}
 
   public static create(courseGateway: CourseGateway) {
     return new FindByIdCourseUsecase(courseGateway);
   }
 
-  async execute({ id } : FindCourseInputDto): Promise<FindCourseOutputDto> {
+  async execute({ id } : FindByIdPayload): Promise<FindCourseOutputDto> {
       const foundCourse = await this.courseGateway.findById(id);
 
       const output: FindCourseOutputDto = this.presentOutput(foundCourse);

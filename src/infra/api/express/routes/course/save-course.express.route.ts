@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { SaveCourseInputDto, SaveCourseUsecase } from "../../../../../usecases/course/save/save-course.usecase";
 import { HttpMethod, Route } from "../route";
+import { ValidationError } from "../../../../../shared/errors/validation.error";
+import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type SaveCourseResponseDto = {
   id: string;
@@ -23,15 +25,15 @@ export class SaveCourseRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const { title, description, hours } = request.body;
-
-      const input: SaveCourseInputDto = {
-        title,
-        description,
-        hours,
-      };
-
       try {
+        const { title, description, hours } = request.body;
+  
+        const input: SaveCourseInputDto = {
+          title,
+          description,
+          hours,
+        };
+
         const output: SaveCourseResponseDto = 
           await this.saveCourseService.execute(input);
 
@@ -39,16 +41,7 @@ export class SaveCourseRoute implements Route {
 
         response.status(201).json(responseBody).send();
       } catch(errorCatched) {
-        let errorMessage: string = "Unknown error"
-
-        if(errorCatched instanceof Error) {
-          errorMessage = errorCatched.message;
-        }
-
-        response.status(400).json({
-          error: "Error",
-          message: errorMessage,
-        }).send();
+        GenericRouteErrorHandling.handle(response, errorCatched);
       }
     };
   }

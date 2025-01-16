@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
 import { FindAllUserUsecase } from "../../../../../usecases/user/find-all/find-all-user.usecase";
+import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindAllUserResponseDto = {
   email: String,
@@ -26,12 +27,16 @@ export class FindAllUserRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const output: FindAllUserResponseDto =
-        await this.findAllUserService.execute();
-
-      const responseBody = this.present(output);
-
-      response.status(200).json(responseBody).send();
+      try {
+        const output: FindAllUserResponseDto =
+          await this.findAllUserService.execute();
+  
+        const responseBody = this.present(output);
+  
+        response.status(200).json(responseBody).send();
+      } catch(errorCatched) {
+        GenericRouteErrorHandling.handle(response, errorCatched);
+      }
     };
   }
 

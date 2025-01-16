@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
 import { FindByIdUserUsecase } from "../../../../../usecases/user/find-by-id/find-by-id-user.usecase";
+import { RequiredIdFindByValidation } from "../../../../../shared/validations/required-id-find-by.validation";
+import { ValidationError } from "../../../../../shared/errors/validation.error";
+import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindByIdUserResponseDto = {
   name: String,
@@ -26,14 +29,20 @@ export class FindByIdUserRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const { id } = request.params;
-
-      const output: FindByIdUserResponseDto =
-        await this.findByIdUserService.execute({ id });
-
-      const responseBody = this.present(output);
-
-      response.status(200).json(responseBody).send();
+      try {
+        const { id } = request.params;
+  
+        RequiredIdFindByValidation.validate(id);
+  
+        const output: FindByIdUserResponseDto =
+          await this.findByIdUserService.execute({ id });
+  
+        const responseBody = this.present(output);
+  
+        response.status(200).json(responseBody).send();
+      } catch(errorCatched) {
+        GenericRouteErrorHandling.handle(response, errorCatched);
+      }
     };
   }
 

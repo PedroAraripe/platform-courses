@@ -3,6 +3,7 @@ import { HttpMethod, Route } from "../route";
 import { FindAllEnrollmentUsecase } from "../../../../../usecases/enrollment/find-all/find-all-enrollment.usecase";
 import { Course, CoursePublicDto } from "../../../../../domain/course/entity/course";
 import { User, UserPublicDto } from "../../../../../domain/user/entity/user";
+import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindAllEnrollmentResponseDto = {
   id: string,
@@ -30,12 +31,16 @@ export class FindAllEnrollmentRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const output: FindAllEnrollmentResponseDto =
-        await this.findAllEnrollmentService.execute();
-
-      const responseBody = this.present(output);
-
-      response.status(200).json(responseBody).send();
+      try {
+        const output: FindAllEnrollmentResponseDto =
+          await this.findAllEnrollmentService.execute();
+  
+        const responseBody = this.present(output);
+  
+        response.status(200).json(responseBody).send();
+      } catch(errorCatched) {
+        GenericRouteErrorHandling.handle(response, errorCatched);
+      }
     };
   }
 

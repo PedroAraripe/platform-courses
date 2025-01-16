@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Course } from "../../../domain/course/entity/course";
 import { CourseGateway } from "../../../domain/course/gateway/course.gateway";
+import { NotFoundError } from "../../../shared/errors/not-found.error";
 
 export class CourseRepositoryPrisma implements CourseGateway {
   constructor(private readonly prismaClient: PrismaClient) {}
@@ -25,7 +26,7 @@ export class CourseRepositoryPrisma implements CourseGateway {
     const foundCourse = await this.prismaClient.courses.findUnique({where: { id }})
 
     if(!foundCourse) {
-      throw Error("Course not found");
+      throw new NotFoundError("Course");
     }
 
     return Course.with(foundCourse);
@@ -41,7 +42,7 @@ export class CourseRepositoryPrisma implements CourseGateway {
     })
 
     if(!foundCourses.length) {
-      throw Error("Course not found");
+      throw new NotFoundError("Courses");
     }
 
     return foundCourses.map(foundCourse => Course.with(foundCourse));

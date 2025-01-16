@@ -1,13 +1,9 @@
-import { Course, CoursePublicDto } from "../../../domain/course/entity/course";
+import { CoursePublicDto } from "../../../domain/course/entity/course";
 import { Enrollment } from "../../../domain/enrollment/entity/enrollment";
 import { EnrollmentGateway } from "../../../domain/enrollment/gateway/enrollment.gateway";
-import { User, UserPublicDto } from "../../../domain/user/entity/user";
-import { UserGateway } from "../../../domain/user/gateway/user.gateway";
+import { UserPublicDto } from "../../../domain/user/entity/user";
+import { FindByIdPayload } from "../../../shared/types/find-by-id-payload.type";
 import { Usecase } from "../../usecase";
-
-export type FindEnrollmentInputDto = {
-  id: string;
-};
 
 export type FindEnrollmentOutputDto = {
   id: string;
@@ -18,14 +14,14 @@ export type FindEnrollmentOutputDto = {
   user?: UserPublicDto;
 };
 
-export class FindByIdEnrollmentUsecase implements Usecase<FindEnrollmentInputDto, FindEnrollmentOutputDto> {
+export class FindByIdEnrollmentUsecase implements Usecase<FindByIdPayload, FindEnrollmentOutputDto> {
   private constructor(private readonly enrollmentGateway: EnrollmentGateway) {}
 
   public static create(enrollmentGateway: EnrollmentGateway) {
     return new FindByIdEnrollmentUsecase(enrollmentGateway);
   }
 
-  async execute({ id }: FindEnrollmentInputDto): Promise<FindEnrollmentOutputDto> {
+  async execute({ id }: FindByIdPayload): Promise<FindEnrollmentOutputDto> {
       const enrollmentFound = await this.enrollmentGateway.findById(id);
 
       const output: FindEnrollmentOutputDto = this.presentOutput(enrollmentFound);

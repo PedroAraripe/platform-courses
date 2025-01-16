@@ -1,17 +1,12 @@
 import { Course } from "../../course/entity/course";
 import { User, UserPublicDto } from "../../user/entity/user";
-
- export type EnrollmentProps = {
-  id: string,
-  userId: string,
-  courseId: string,
-  enrolledAt: Date,
-  course?: Course,
-  user?: User,
-}
+import { EnrollmentValidations } from "../validations/enrollment-payload.validation";
+import { EnrollmentProps } from "../types/enrollment.types";
 
 export class Enrollment {
-  private constructor(private readonly props: EnrollmentProps) {}
+  private constructor(private readonly props: EnrollmentProps) {
+    EnrollmentValidations.validate(props);
+  }
 
   public static create(
       userId: string,

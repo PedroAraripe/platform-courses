@@ -3,6 +3,7 @@ import { Enrollment } from "../../../domain/enrollment/entity/enrollment";
 import { EnrollmentGateway } from "../../../domain/enrollment/gateway/enrollment.gateway";
 import { Course } from "../../../domain/course/entity/course";
 import { User } from "../../../domain/user/entity/user";
+import { NotFoundError } from "../../../shared/errors/not-found.error";
 
 export class EnrollmentRepositoryPrisma implements EnrollmentGateway {
   constructor(private readonly prismaClient: PrismaClient) {}
@@ -32,7 +33,7 @@ export class EnrollmentRepositoryPrisma implements EnrollmentGateway {
     })
 
     if(!foundEnrollment) {
-      throw Error("Enrollment not found");
+      throw new NotFoundError("Enrollment"); 
     }
 
     return Enrollment.with({
@@ -52,7 +53,7 @@ export class EnrollmentRepositoryPrisma implements EnrollmentGateway {
     })
 
     if(!foundEnrollments?.length) {
-      throw Error("Enrollment not found");
+      throw new NotFoundError("Enrollments"); 
     }
 
     return foundEnrollments.map(foundEnrollment => Enrollment.with({

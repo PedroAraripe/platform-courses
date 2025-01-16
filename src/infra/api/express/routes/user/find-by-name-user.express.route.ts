@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
 import { FindByNameUserUsecase } from "../../../../../usecases/user/find-by-name/find-by-name-user.usecase";
+import { RequiredSeachFindByValidation } from "../../../../../shared/validations/required-search-find-by.validation";
+import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindByNameUserResponseDto = {
   id: String,
@@ -18,7 +20,7 @@ export class FindByNameUserRoute implements Route {
 
   public static create(findByNameUserService: FindByNameUserUsecase) {
     return new FindByNameUserRoute(
-      "/users/search/:name",
+      "/users-search/:name?",
       HttpMethod.GET,
       findByNameUserService
     );
@@ -26,14 +28,19 @@ export class FindByNameUserRoute implements Route {
 
   public getHandler() {
     return async (request: Request, response: Response) => {
-      const { name } = request.params;
-
-      const output: FindByNameUserResponseDto =
-        await this.findByNameUserService.execute({ name });
-
-      const responseBody = this.present(output);
-
-      response.status(200).json(responseBody).send();
+      try {
+        const { name } = request.params;
+        RequiredSeachFindByValidation.validate(name);
+  
+        const output: FindByNameUserResponseDto =
+          await this.findByNameUserService.execute({ name });
+  
+        const responseBody = this.present(output);
+  
+        response.status(200).json(responseBody).send();
+      } catch(errorCatched) {
+        GenericRouteErrorHandling.handle(response, errorCatched);
+      }
     };
   }
 

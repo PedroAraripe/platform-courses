@@ -1,13 +1,6 @@
 import { PasswordHasher } from "../../../infra/cryptography/password-hasher";
-import { ValidationError, ValidationErrorDetail } from "../../../shared/errors/ValidationError";
-
-export type UserProps = {
-  name: string,
-  password: string,
-  email: string,
-  id: string,
-  createdAt: Date
-}
+import { UserProps } from "../types/user.types";
+import { UserValidations } from "../validations/user-payload.validation";
 
  export type UserPublicDto = {
   name: string,
@@ -17,10 +10,8 @@ export type UserProps = {
 
 export class User {
   private constructor(private readonly props: UserProps) {
-    this.validate();
+    UserValidations.validate(props);
   }
-
-  // todo separar essa logica do validate pro domain/validations/
 
   public static async create(name: string, password: string, email: string) {
     return new User({
@@ -66,34 +57,5 @@ export class User {
       name: this.name,
       createdAt: this.createdAt,
     };
-  }
-
-  private validate() {
-    const errorsDetails: ValidationErrorDetail[] = [];
-
-    if(!this.props.name) {
-      errorsDetails.push({
-        field: "Name",
-        message: "Name is required"
-      });
-    }
-
-    if(!this.props.password) {
-      errorsDetails.push({
-        field: "Password",
-        message: "Password is required"
-      });
-    }
-
-    if(!this.props.email) {
-      errorsDetails.push({
-        field: "Email",
-        message: "Email is required"
-      });
-    }
-
-    if(errorsDetails.length) {
-      throw new ValidationError("Certain fields are empty", errorsDetails)
-    }
   }
 }
