@@ -1,9 +1,11 @@
 import { PasswordHasher } from "../../../infra/cryptography/password-hasher";
+import { Enrollment, EnrollmentWithCourseDto } from "../../enrollment/entity/enrollment";
 import { UserProps } from "../types/user.types";
 import { UserValidations } from "../validations/user-payload.validation";
 
  export type UserPublicDto = {
   name: string,
+  enrollments?: EnrollmentWithCourseDto[],
   id: string,
   createdAt: Date
 }
@@ -47,6 +49,10 @@ export class User {
     return this.props.createdAt;
   }
 
+  public get enrollments() {
+    return this.props.enrollments?.map(enrollment => enrollment.loadedCourseDto());
+  }
+
   static async generateHashPassword(password:string ) {
     return await PasswordHasher.hash(password);
   }
@@ -56,6 +62,17 @@ export class User {
       id: this.id,
       name: this.name,
       createdAt: this.createdAt,
+      enrollments: this.enrollments,
+    };
+  }
+
+  loadedEnrollmentsDto(): UserPublicDto {
+    return {
+      id: this.id,
+      name: this.name,
+      createdAt: this.createdAt,
+      enrollments: this.enrollments,
+      
     };
   }
 }

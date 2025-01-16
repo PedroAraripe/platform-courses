@@ -1,3 +1,4 @@
+import { EnrollmentWithCourseDto } from "../../../domain/enrollment/entity/enrollment";
 import { User } from "../../../domain/user/entity/user";
 import { UserGateway } from "../../../domain/user/gateway/user.gateway";
 import { FindByIdPayload } from "../../../shared/types/find-by-id-payload.type";
@@ -8,6 +9,7 @@ export type FindUserOutputDto = {
   id: string,
   createdAt: Date,
   email: string,
+  enrollments?: EnrollmentWithCourseDto[],
 };
 
 export class FindByIdUserUsecase implements Usecase<FindByIdPayload, FindUserOutputDto> {
@@ -26,12 +28,12 @@ export class FindByIdUserUsecase implements Usecase<FindByIdPayload, FindUserOut
   }
 
   private presentOutput(user: User) : FindUserOutputDto {
-    
     return {
       id: user.id,
       name: user.name,
       email: user.email,
       createdAt: user.createdAt,
+      enrollments: user.enrollments,
     }
   }
 } 

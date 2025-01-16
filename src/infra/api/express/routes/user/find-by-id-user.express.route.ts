@@ -4,12 +4,14 @@ import { FindByIdUserUsecase } from "../../../../../usecases/user/find-by-id/fin
 import { RequiredIdFindByValidation } from "../../../../../shared/validations/required-id-find-by.validation";
 import { ValidationError } from "../../../../../shared/errors/validation.error";
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
+import { EnrollmentWithCourseDto } from "../../../../../domain/enrollment/entity/enrollment";
 
 export type FindByIdUserResponseDto = {
   name: String,
   email: String,
   id: String,
   createdAt: Date,
+  enrollments?: EnrollmentWithCourseDto[],
 };
 
 export class FindByIdUserRoute implements Route {
@@ -60,6 +62,7 @@ export class FindByIdUserRoute implements Route {
       name: input.name,
       createdAt: input.createdAt,
       email: input.email,
+      enrollments: input.enrollments
     };
   
     return response;
