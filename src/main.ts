@@ -88,7 +88,7 @@ function main() {
     findByUserIdEnrollmentRoute,
   ]);
 
-  const port = 8000;
+  const port = 5000;
 
   api.start(port);
 }
