@@ -3,12 +3,14 @@ import { HttpMethod, Route } from "../route";
 import { FindByNameUserUsecase } from "../../../../../usecases/user/find-by-name/find-by-name-user.usecase";
 import { RequiredSeachFindByValidation } from "../../../../../shared/validations/required-search-find-by.validation";
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
+import { EnrollmentWithCourseDto } from "../../../../../domain/enrollment/entity/enrollment";
 
 export type FindByNameUserResponseDto = {
   id: String,
   name: String,
   createdAt: Date,
   email: string,
+  enrollments?: EnrollmentWithCourseDto[],
 }[];
 
 export class FindByNameUserRoute implements Route {
@@ -52,12 +54,13 @@ export class FindByNameUserRoute implements Route {
     return this.method;
   }
 
-  private present(inputs: FindByNameUserResponseDto): FindByNameUserResponseDto {  
+  private present(inputs: FindByNameUserResponseDto): FindByNameUserResponseDto {
     return inputs.map(input => ({
       id: input.id,
       name: input.name,
       email: input.email,
       createdAt: input.createdAt,
+      enrollments: input.enrollments
     }));
   }
 }

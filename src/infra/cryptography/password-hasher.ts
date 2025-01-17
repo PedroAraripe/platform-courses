@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt"; // CORRETO
 
 export class PasswordHasher {
   private static readonly SALT_ROUNDS = 10;
