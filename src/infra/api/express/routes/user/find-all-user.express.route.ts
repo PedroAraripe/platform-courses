@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
 import { FindAllUserUsecase } from "../../../../../usecases/user/find-all/find-all-user.usecase";
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
+import { EnrollmentWithCourseDto } from "../../../../../domain/enrollment/entity/enrollment";
 
 export type FindAllUserResponseDto = {
   email: String,
   name: String,
   id: String,
   createdAt: Date,
+  enrollments?: EnrollmentWithCourseDto[],
 }[];
 
 export class FindAllUserRoute implements Route {
@@ -54,6 +56,7 @@ export class FindAllUserRoute implements Route {
       name: user.name,
       createdAt: user.createdAt,
       email: user.email,
+      enrollments: user.enrollments
     }));
   }
 }

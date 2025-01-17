@@ -2,6 +2,15 @@ import { Course } from "../../course/entity/course";
 import { User, UserPublicDto } from "../../user/entity/user";
 import { EnrollmentValidations } from "../validations/enrollment-payload.validation";
 import { EnrollmentProps } from "../types/enrollment.types";
+import { CourseProps } from "../../course/types/course.types";
+
+export type EnrollmentWithCourseDto = {
+  userId: string;
+  courseId: string;
+  user?: UserPublicDto;
+  course?: CourseProps;
+  enrolledAt: Date,
+}
 
 export class Enrollment {
   private constructor(private readonly props: EnrollmentProps) {
@@ -50,5 +59,14 @@ export class Enrollment {
 
   public get course() {
     return this.props.course?.publicDto();
+  }
+
+  public loadedCourseDto(): EnrollmentWithCourseDto {
+    return {      
+      userId: this.userId,
+      courseId: this.courseId,
+      course: this.course,
+      enrolledAt: this.enrolledAt,
+    };
   }
 }

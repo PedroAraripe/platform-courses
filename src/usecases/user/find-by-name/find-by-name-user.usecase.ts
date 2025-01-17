@@ -1,3 +1,4 @@
+import { EnrollmentWithCourseDto } from "../../../domain/enrollment/entity/enrollment";
 import { User } from "../../../domain/user/entity/user";
 import { UserGateway } from "../../../domain/user/gateway/user.gateway";
 import { Usecase } from "../../usecase";
@@ -11,6 +12,7 @@ export type FindUserOutputDto = {
   id: string,
   email: string,
   createdAt: Date,
+  enrollments?: EnrollmentWithCourseDto[],
 }[];
 
 export class FindByNameUserUsecase implements Usecase<FindUserInputDto, FindUserOutputDto> {
@@ -34,6 +36,7 @@ export class FindByNameUserUsecase implements Usecase<FindUserInputDto, FindUser
       name: user.name,
       email: user.email,
       createdAt: user.createdAt,
+      enrollments: user.enrollments,
     }));
   }
 } 

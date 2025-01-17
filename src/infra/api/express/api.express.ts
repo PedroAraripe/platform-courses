@@ -43,5 +43,7 @@ export class ApiExpress implements Api {
           method: route.route.stack[0].method,
         };
       });
+
+      console.log(routes);
   }
 }
