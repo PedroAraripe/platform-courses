@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: prisma
+    ports:
+      - 5499:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-api
+    restart: always
+    ports:
+      - 5000:5000
+    environment:
+      DATABASE_URL: postgresql://prisma:prisma@postgres:5432/prisma
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend-app
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    environment:
+      API_URL: http://backend-api:5000
+    expose:
+      - 3000
+
+volumes:
+  postgres_data: {}

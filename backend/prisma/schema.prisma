@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://prisma:prisma@postgres:5432/prisma"
+}
+
+model Users {
+  id          String     @id
+  name        String
+  email       String
+  password    String
+  createdAt   DateTime   @default(now())   @map("created_at")
+
+  enrollments Enrollments[]
+}
+
+model Courses {
+  id            String     @id
+  title         String
+  hours         Int
+  description   String
+  createdAt     DateTime   @default(now())   @map("created_at")
+
+  enrollments Enrollments[]
+}
+
+model Enrollments {
+  id          String   @id
+  userId      String   @map("user_id")
+  courseId    String   @map("course_id")
+  enrolledAt  DateTime @default(now()) @map("enrolled_at")
+
+  user   Users   @relation(fields: [userId], references: [id])
+  course Courses @relation(fields: [courseId], references: [id])
+}
