@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { SaveCourseInputDto, SaveCourseUsecase } from "../../../../../usecases/course/save/save-course.usecase";
 import { HttpMethod, Route } from "../route";
-import { ValidationError } from "../../../../../shared/errors/validation.error";
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type SaveCourseResponseDto = {

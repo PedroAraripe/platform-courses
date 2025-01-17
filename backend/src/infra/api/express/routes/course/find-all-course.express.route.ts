@@ -4,9 +4,9 @@ import { FindAllCourseUsecase } from "../../../../../usecases/course/find-all/fi
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindAllCourseResponseDto = {
-  id: String,
-  title: String,
-  description: String,
+  id: string,
+  title: string,
+  description: string,
   createdAt: Date,
 }[];
 

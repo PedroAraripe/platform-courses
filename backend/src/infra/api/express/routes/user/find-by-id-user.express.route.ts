@@ -2,14 +2,13 @@ import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
 import { FindByIdUserUsecase } from "../../../../../usecases/user/find-by-id/find-by-id-user.usecase";
 import { RequiredIdFindByValidation } from "../../../../../shared/validations/required-id-find-by.validation";
-import { ValidationError } from "../../../../../shared/errors/validation.error";
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 import { EnrollmentWithCourseDto } from "../../../../../domain/enrollment/entity/enrollment";
 
 export type FindByIdUserResponseDto = {
-  name: String,
-  email: String,
-  id: String,
+  name: string,
+  email: string,
+  id: string,
   createdAt: Date,
   enrollments?: EnrollmentWithCourseDto[],
 };

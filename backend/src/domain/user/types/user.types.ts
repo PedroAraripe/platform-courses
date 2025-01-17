@@ -7,4 +7,5 @@ export type UserProps = {
   id: string,
   enrollments?: Enrollment[],
   createdAt: Date
+  wasUpserted?: boolean,
 }

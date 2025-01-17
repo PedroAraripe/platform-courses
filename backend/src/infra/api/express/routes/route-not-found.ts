@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { SaveUserInputDto, SaveUserUsecase } from "../../../../usecases/user/save/save-user.usecase";
 import { HttpMethod, Route } from "./route";
-import { ValidationError } from "../../../../shared/errors/validation.error";
 import { GenericRouteErrorHandling } from "./errors/generic-route-error-handling.error";
 import { NotFoundError } from "../../../../shared/errors/not-found.error";
 

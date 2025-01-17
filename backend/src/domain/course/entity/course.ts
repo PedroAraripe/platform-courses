@@ -11,7 +11,7 @@ export class Course {
 
   public static create(title: string, description: string, hours: number) {
     return new Course({
-      id: IdGenerator.generate(),
+      id: IdGenerator.execute(),
       title,
       description: description,
       createdAt: new Date(),
@@ -41,6 +41,10 @@ export class Course {
 
   public get createdAt() {
     return this.props.createdAt;
+  }
+
+  public get wasUpserted() {
+    return this.props?.wasUpserted;
   }
 
   public publicDto(): CoursePublicDto {

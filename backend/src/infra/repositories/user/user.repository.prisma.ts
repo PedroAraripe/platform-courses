@@ -12,7 +12,7 @@ export class UserRepositoryPrisma implements UserGateway {
     return new UserRepositoryPrisma(prismaClient);
   }
 
-  public async save(user: User): Promise<void> {
+  public async save(user: User): Promise<User> {
     const data = {
       id: user.id,
       name: user.name,
@@ -21,12 +21,52 @@ export class UserRepositoryPrisma implements UserGateway {
       createdAt: user.createdAt,
     }
 
-    await this.prismaClient.users.create({ data });
+    const createdUser = await this.prismaClient.users.upsert({
+      where: {
+        email: data.email
+      },
+      create: {
+        ... data,
+      },
+      update: {},
+    });
+    
+    return User.with({
+      ...createdUser,
+      wasUpserted: data.id !== createdUser.id
+    });
   }
 
   public async findById(id: string): Promise<User> {
     const foundUser = await this.prismaClient.users.findUnique({
       where: { id },
+      include: {
+        enrollments: {
+          include: {
+            course: true,
+          },
+        },
+      },
+    })
+
+    if(!foundUser) {
+      throw new NotFoundError("User"); 
+    }
+
+    return User.with({
+      ...foundUser,
+      enrollments: foundUser.enrollments.map(enrollment => {
+        return Enrollment.with({
+          ...enrollment,
+          course: Course.with(enrollment.course)
+        })
+      })
+    });
+  }
+
+  public async findByEmail(email: string): Promise<User> {
+    const foundUser = await this.prismaClient.users.findUnique({
+      where: { email },
       include: {
         enrollments: {
           include: {

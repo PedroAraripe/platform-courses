@@ -11,6 +11,7 @@ import { RouteNotFound } from "./infra/api/express/routes/route-not-found";
 import { FindAllUserRoute } from "./infra/api/express/routes/user/find-all-user.express.route";
 import { FindByIdUserRoute } from "./infra/api/express/routes/user/find-by-id-user.express.route";
 import { FindByNameUserRoute } from "./infra/api/express/routes/user/find-by-name-user.express.route";
+import { LoginUserRoute } from "./infra/api/express/routes/user/login-user.express.route";
 import { SaveUserRoute } from "./infra/api/express/routes/user/save-user.express.route";
 import { CourseRepositoryPrisma } from "./infra/repositories/course/course.repository.prisma";
 import { EnrollmentRepositoryPrisma } from "./infra/repositories/enrollment/enrollment.repository.prisma";
@@ -27,6 +28,7 @@ import { SaveEnrollmentUsecase } from "./usecases/enrollment/save/save-enrollmen
 import { FindAllUserUsecase } from "./usecases/user/find-all/find-all-user.usecase";
 import { FindByIdUserUsecase } from "./usecases/user/find-by-id/find-by-id-user.usecase";
 import { FindByNameUserUsecase } from "./usecases/user/find-by-name/find-by-name-user.usecase";
+import { LoginUserUsecase } from "./usecases/user/login/login-user.usecase";
 import { SaveUserUsecase } from "./usecases/user/save/save-user.usecase";
 
 function main() {
@@ -34,11 +36,13 @@ function main() {
   const userRepository = UserRepositoryPrisma.create(prisma);
 
   const saveUserUsecase = SaveUserUsecase.create(userRepository);
+  const loginUserUsecase = LoginUserUsecase.create(userRepository);
   const findByIdUserUsecase = FindByIdUserUsecase.create(userRepository);
   const findAllUserUsecase = FindAllUserUsecase.create(userRepository);
   const findByNameUserUsecase = FindByNameUserUsecase.create(userRepository);
 
   const saveUserRoute = SaveUserRoute.create(saveUserUsecase);
+  const loginUserRoute = LoginUserRoute.create(loginUserUsecase);
   const findByIdUserRoute = FindByIdUserRoute.create(findByIdUserUsecase);
   const findAllUserRoute = FindAllUserRoute.create(findAllUserUsecase);
   const findByNameUserRoute = FindByNameUserRoute.create(findByNameUserUsecase);
@@ -59,7 +63,7 @@ function main() {
   // Enrollments routes
   const enrollmentRepository = EnrollmentRepositoryPrisma.create(prisma);
 
-  const saveEnrollmentUsecase = SaveEnrollmentUsecase.create(enrollmentRepository);
+  const saveEnrollmentUsecase = SaveEnrollmentUsecase.create(enrollmentRepository, userRepository, courseRepository);
   const findByIdEnrollmentUsecase = FindByIdEnrollmentUsecase.create(enrollmentRepository);
   const findAllEnrollmentUsecase = FindAllEnrollmentUsecase.create(enrollmentRepository);
   const findByUserIdEnrollmentUsecase = FindByUserIdEnrollmentUsecase.create(enrollmentRepository);
@@ -75,6 +79,7 @@ function main() {
   const api = ApiExpress.create([
     // User routes
     saveUserRoute,
+    loginUserRoute,
     findByIdUserRoute,
     findAllUserRoute,
     findByNameUserRoute,

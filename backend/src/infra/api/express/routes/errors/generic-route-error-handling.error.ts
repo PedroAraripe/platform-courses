@@ -1,5 +1,4 @@
 import { Response } from "express";
-import { ValidationError } from "../../../../../shared/errors/validation.error";
 import { UnknownError } from "../../../../../shared/errors/unknown.error";
 import { ApplicationError } from "../../../../../shared/errors/application.error";
 

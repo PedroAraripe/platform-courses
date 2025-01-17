@@ -6,8 +6,8 @@ import { GenericRouteErrorHandling } from "../errors/generic-route-error-handlin
 import { EnrollmentWithCourseDto } from "../../../../../domain/enrollment/entity/enrollment";
 
 export type FindByNameUserResponseDto = {
-  id: String,
-  name: String,
+  id: string,
+  name: string,
   createdAt: Date,
   email: string,
   enrollments?: EnrollmentWithCourseDto[],

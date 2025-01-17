@@ -10,7 +10,7 @@ export class CourseRepositoryPrisma implements CourseGateway {
     return new CourseRepositoryPrisma(prismaClient);
   }
 
-  public async save(course: Course): Promise<void> {
+  public async save(course: Course): Promise<Course> {
     const data = {
       id: course.id,
       title: course.title,
@@ -19,7 +19,18 @@ export class CourseRepositoryPrisma implements CourseGateway {
       createdAt: course.createdAt,
     }
 
-    await this.prismaClient.courses.create({ data });
+    const courseCreated = await this.prismaClient.courses.upsert({
+      where: {
+        title: course.title,
+      },
+      update: {},
+      create: {...data}
+    });
+
+    return Course.with({
+      ...courseCreated,
+      wasUpserted: data.id !== courseCreated.id
+    })
   }
 
   public async findById(id: string): Promise<Course> {

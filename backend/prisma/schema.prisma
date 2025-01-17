@@ -3,14 +3,19 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://prisma:prisma@postgres:5432/prisma"
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = "postgresql://prisma:prisma@postgres:5432/prisma"
+// }
 
 model Users {
   id          String     @id
   name        String
-  email       String
+  email       String     @unique
   password    String
   createdAt   DateTime   @default(now())   @map("created_at")
 
@@ -19,7 +24,7 @@ model Users {
 
 model Courses {
   id            String     @id
-  title         String
+  title         String     @unique
   hours         Int
   description   String
   createdAt     DateTime   @default(now())   @map("created_at")
@@ -35,4 +40,6 @@ model Enrollments {
 
   user   Users   @relation(fields: [userId], references: [id])
   course Courses @relation(fields: [courseId], references: [id])
+
+  @@unique([userId, courseId], name: "userId_courseId")
 }

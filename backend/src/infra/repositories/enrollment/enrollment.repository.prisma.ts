@@ -12,15 +12,26 @@ export class EnrollmentRepositoryPrisma implements EnrollmentGateway {
     return new EnrollmentRepositoryPrisma(prismaClient);
   }
 
-  public async save(enrollment: Enrollment): Promise<void> {
+  public async save(enrollment: Enrollment): Promise<Enrollment> {
     const data = {
       id: enrollment.id,
       userId: enrollment.userId,
-      enrolledAt: enrollment.enrolledAt,
       courseId: enrollment.courseId,
+      enrolledAt: enrollment.enrolledAt,
     }
 
-    await this.prismaClient.enrollments.create({ data });
+    const enrollmentCreated = await this.prismaClient.enrollments.upsert({
+      where: {
+        userId_courseId: { userId: data.userId, courseId: data.courseId }
+      },
+      update: {},
+      create: {...data}
+    });
+
+    return Enrollment.with({
+      ...enrollmentCreated,
+      wasUpserted: data.id !== enrollmentCreated.id
+    })
   }
 
   public async findById(id: string): Promise<Enrollment> {

@@ -4,4 +4,5 @@
   description: string,
   hours: number,
   createdAt: Date,
+  wasUpserted?: boolean;
 }

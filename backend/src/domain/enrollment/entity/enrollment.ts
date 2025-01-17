@@ -25,7 +25,7 @@ export class Enrollment {
       course?: Course
     ) {
     return new Enrollment({
-      id: IdGenerator.generate(),
+      id: IdGenerator.execute(),
       userId,
       courseId,
       user,
@@ -60,6 +60,10 @@ export class Enrollment {
 
   public get course() {
     return this.props.course?.publicDto();
+  }
+
+  public get wasUpserted() {
+    return this.props?.wasUpserted;
   }
 
   public loadedCourseDto(): EnrollmentWithCourseDto {

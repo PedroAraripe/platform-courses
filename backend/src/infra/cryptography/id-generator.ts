@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 
 export class IdGenerator {
-  static generate() {
+  static execute() {
     return crypto.randomUUID().toString();
   }
 }

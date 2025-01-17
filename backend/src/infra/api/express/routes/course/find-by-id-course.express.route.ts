@@ -4,9 +4,9 @@ import { FindByIdCourseUsecase } from "../../../../../usecases/course/find-by-id
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindByIdCourseResponseDto = {
-  title: String,
-  description: String,
-  id: String,
+  title: string,
+  description: string,
+  id: string,
   createdAt: Date,
 };
 

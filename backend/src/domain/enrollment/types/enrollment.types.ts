@@ -8,4 +8,5 @@ export type EnrollmentProps = {
   enrolledAt: Date,
   course?: Course,
   user?: User,
+  wasUpserted?: boolean;
 }

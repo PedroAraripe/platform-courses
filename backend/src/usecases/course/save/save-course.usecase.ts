@@ -1,5 +1,6 @@
 import { Course } from "../../../domain/course/entity/course";
 import { CourseGateway } from "../../../domain/course/gateway/course.gateway";
+import { AlreadyCreatedEntityError } from "../../../shared/errors/already-created-entity.error";
 import { Usecase } from "../../usecase";
 
 export type SaveCourseInputDto = {
@@ -26,7 +27,11 @@ export class SaveCourseUsecase implements Usecase<SaveCourseInputDto, SaveCourse
   }: SaveCourseInputDto): Promise<SaveCourseOutputDto> {
       const localCourse = Course.create(title, description, hours);
 
-      await this.courseGateway.save(localCourse);
+      const courseCreated = await this.courseGateway.save(localCourse);
+      
+      if(courseCreated.wasUpserted) {
+        throw new AlreadyCreatedEntityError("Course");
+      }
 
       const output: SaveCourseOutputDto = this.presentOutput(localCourse);
 

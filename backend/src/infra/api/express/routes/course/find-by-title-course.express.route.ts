@@ -5,9 +5,9 @@ import { RequiredSeachFindByValidation } from "../../../../../shared/validations
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
 
 export type FindByTitleCourseResponseDto = {
-  id: String,
-  description: String,
-  title: String,
+  id: string,
+  description: string,
+  title: string,
   createdAt: Date,
 }[];
 

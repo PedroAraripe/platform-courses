@@ -2,36 +2,56 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import { DataTable } from '../@/components/ui/data-table';
 
-// fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`)
-//   .then((response) => {
-//     return response.json()
-//   })
-//   .then((data) => {
-//     return setData(data)
-//   })
-//   .catch((err) => {
-//     console.error(err)
-//   });
+export default function GeneralVisionDash() {
+  // const [teste, setTeste] = useState(null);
 
-export default function Home() {
-  const [teste, setTeste] = useState(null);
+  const [data, setData] = useState([
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+    },
+    {
+      id: "489e1d42",
+      amount: 125,
+      status: "processing",
+      email: "example@gmail.com",
+    },
+  ]);
+
+  const [columns, setColumns] = useState([
+    {
+      accessorKey: "status",
+      header: "Status",
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "amount",
+      header: "Amount",
+    },
+  ])
   
-  useEffect(() => {
-    async function fetchBaseData() {
-      try {
-        const { data } = await axios.get(`http://localhost:5000/users/51febe1a-4c4f-4c5e-ae1d-6b1ccc7e8713`)
-        console.log("data", data)
+  // useEffect(() => {
+  //   async function fetchBaseData() {
+  //     try {
+  //       const { data } = await axios.get(`http://localhost:5000/users/569de642-cebb-4aef-94fb-d37d15695ecf`)
+  //       console.log("data", data)
         
-        setTeste(data?.email || "chave errada")
-      } catch(e) {
-        setTeste("erro de loading" + ` ${e}`)
-        console.error(e);
-      }
-    }
+  //       setTeste(data?.email || "chave errada")
+  //     } catch(e) {
+  //       setTeste("erro de loading" + ` ${e}`)
+  //       console.error(e);
+  //     }
+  //   }
 
-    fetchBaseData();
-  }, [])
+  //   fetchBaseData();
+  // }, [])
 
   return (
     <div className={styles.container}>
@@ -41,8 +61,13 @@ export default function Home() {
       </Head>
 
       <main>
+        <div className='wtf'>
+          teste
+        </div>
+        <DataTable columns={columns} data={data} />
+        
         <h1 className={styles.title}>
-          Welcome to { teste } <a href="https://nextjs.org">Next.js!</a>
+        Visão geral do sistema <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>
