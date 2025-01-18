@@ -1,4 +1,5 @@
 import { IdGenerator } from "../../../infra/cryptography/id-generator";
+import { CurrentDateIsoGmtCleaned } from "../../../shared/utils/current-date-iso-gmt-cleaned.util";
 import { CourseProps } from "../types/course.types";
 import { CourseValidations } from "../validations/course-payload.validation";
 
@@ -14,7 +15,7 @@ export class Course {
       id: IdGenerator.execute(),
       title,
       description: description,
-      createdAt: new Date(),
+      createdAt: CurrentDateIsoGmtCleaned.execute(),
       hours
     })
   }

@@ -4,6 +4,7 @@ import { EnrollmentValidations } from "../validations/enrollment-payload.validat
 import { EnrollmentProps } from "../types/enrollment.types";
 import { CourseProps } from "../../course/types/course.types";
 import { IdGenerator } from "../../../infra/cryptography/id-generator";
+import { CurrentDateIsoGmtCleaned } from "../../../shared/utils/current-date-iso-gmt-cleaned.util";
 
 export type EnrollmentWithCourseDto = {
   userId: string;
@@ -30,7 +31,7 @@ export class Enrollment {
       courseId,
       user,
       course,
-      enrolledAt: new Date(),
+      enrolledAt: CurrentDateIsoGmtCleaned.execute(),
     })
   }
 

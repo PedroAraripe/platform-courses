@@ -1,5 +1,6 @@
 import { IdGenerator } from "../../../infra/cryptography/id-generator";
 import { PasswordHasherCrypt } from "../../../infra/cryptography/password-hasher-crypt";
+import { CurrentDateIsoGmtCleaned } from "../../../shared/utils/current-date-iso-gmt-cleaned.util";
 import { EnrollmentWithCourseDto } from "../../enrollment/entity/enrollment";
 import { UserProps } from "../types/user.types";
 import { UserValidations } from "../validations/user-payload.validation";
@@ -24,7 +25,7 @@ export class User {
       name,
       email,
       password: password ? await User.generateHashPassword(password) : password,
-      createdAt: new Date(),
+      createdAt:  CurrentDateIsoGmtCleaned.execute(),
     })
   }
 
