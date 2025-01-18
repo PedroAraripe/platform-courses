@@ -118,10 +118,8 @@ e o do backend se encontra na url:
 
   ```json
   {
-    "title": "string",    // Título do curso
-    "description": "string",    // Descrição do curso
-    "startDate": "string",    // Data de início do curso (formato: YYYY-MM-DD)
-    "endDate": "string"    // Data de término do curso (formato: YYYY-MM-DD)
+    "title": "string",
+    "description": "string",
   }
   ```
 
