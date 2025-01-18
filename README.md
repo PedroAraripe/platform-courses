@@ -1,7 +1,3 @@
-Aqui está a documentação ajustada com base nas informações fornecidas:
-
----
-
 # Plataforma de gerenciamento de cursos
 
 Este é um sistema de cadastro de cursos, com um backend construído utilizando Express, Node, Prisma e Moment.js, e um frontend em Next.js com ShadCN para componentes visuais. O sistema foi containerizado com Docker e está hospedado na AWS.
