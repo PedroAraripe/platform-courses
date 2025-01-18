@@ -14,9 +14,13 @@ O código-fonte do projeto pode ser encontrado no GitHub:
 
 ## Deploy na AWS
 
-O deploy se encontra na url:
+O deploy do frontend se encontra na url:
 
 [http://54.198.116.157:3000/](http://54.198.116.157:3000/)
+
+e o do backend se encontra na url:
+
+[http://54.198.116.157:5000/](http://54.198.116.157:5000/)
 
 ## Instruções para Execução do Projeto
 
