@@ -4,8 +4,10 @@ import axios from "axios";
 
 import { FooterDefault } from "../components/footer-default";
 
+import { baseUrl } from "../constants/server";
+
 async function getUsers() {
-  const { data } = await axios.get("http://localhost:5000/enrollments/");
+  const { data } = await axios.get(`${baseUrl}/enrollments/`);
   
   return data.map(item => {
     return {

@@ -6,8 +6,10 @@ import { FooterDefault } from "../components/footer-default";
 
 import { columnCourses } from "../shared/dashboard/columns"
 
+import { baseUrl } from "../constants/server";
+
 async function getUsers() {
-  const { data } = await axios.get("http://localhost:5000/courses/");
+  const { data } = await axios.get(`${baseUrl}/courses/`);
   
   return data;
 }
