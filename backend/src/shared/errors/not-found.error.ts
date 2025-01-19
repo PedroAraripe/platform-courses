@@ -2,7 +2,7 @@ import { ApplicationError } from './application.error';
 
 export class NotFoundError extends ApplicationError {
   constructor( entity: string ) {
-    super('NotFound', `${entity} was not found`, 404);
+    super('NotFound', `${entity} não foi encontrado`, 404);
   }
 
   toJSON() {

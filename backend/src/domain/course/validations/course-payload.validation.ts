@@ -24,10 +24,20 @@ export class CourseValidations {
         field: "hours",
         message: "hours is required"
       });
+    } else if(typeof courseProps.hours !== "number") {
+      errorsDetails.push({
+        field: "hours",
+        message: "hours must be a number"
+      });
+    } else if(courseProps.hours < 0) {
+      errorsDetails.push({
+        field: "hours",
+        message: "hours must be a positive number"
+      });
     }
 
     if(errorsDetails.length) {
-      throw new ValidationError("Some fields are missing or formatted incorrectly", errorsDetails)
+      throw new ValidationError("Alguns campos estão faltando ou estão mal formatados", errorsDetails)
     }
   }
 }

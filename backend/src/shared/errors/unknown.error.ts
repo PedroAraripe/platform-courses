@@ -7,7 +7,7 @@ export type ValidationErrorDetail = {
 
 export class UnknownError extends ApplicationError {
   constructor() {
-    super("Unknown", "An unknown error has occured", 400);
+    super("Unknown", "Um erro desconhecido ocorreu", 400);
   }
 
   toJSON() {

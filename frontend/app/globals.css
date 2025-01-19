@@ -6,6 +6,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.border-minimalist {
+  border: 1px solid HSL(240 5.9% 90%);
+  min-height: fit-content;
+  border-radius: 5px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

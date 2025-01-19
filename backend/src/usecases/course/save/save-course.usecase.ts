@@ -30,7 +30,7 @@ export class SaveCourseUsecase implements Usecase<SaveCourseInputDto, SaveCourse
       const courseCreated = await this.courseGateway.save(localCourse);
       
       if(courseCreated.wasUpserted) {
-        throw new AlreadyCreatedEntityError("Course");
+        throw new AlreadyCreatedEntityError("Curso");
       }
 
       const output: SaveCourseOutputDto = this.presentOutput(localCourse);

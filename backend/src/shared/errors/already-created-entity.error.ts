@@ -8,7 +8,7 @@ export type AlreadyCreatedEntityInput = {
 
 export class AlreadyCreatedEntityError extends ApplicationError {
   constructor(entity : string) {
-    const messageBase: string = `${entity} already exists`;
+    const messageBase: string = `${entity} já existe`;
 
     super('AlreadyCreatedEntity', messageBase, 400);
   }

@@ -41,7 +41,7 @@ export class UserRepositoryPrisma implements UserGateway {
     })
 
     if(!foundUser) {
-      throw new NotFoundError("User"); 
+      throw new NotFoundError("Usuário"); 
     }
 
     return User.with(foundUser);
@@ -53,7 +53,7 @@ export class UserRepositoryPrisma implements UserGateway {
     })
 
     if(!foundUser) {
-      throw new NotFoundError("User"); 
+      throw new NotFoundError("Usuário"); 
     }
 
     return User.with(foundUser);
@@ -69,7 +69,7 @@ export class UserRepositoryPrisma implements UserGateway {
     })
 
     if(!foundUsers.length) {
-      throw new NotFoundError("Users"); 
+      throw new NotFoundError("Usuários"); 
     }
 
     return foundUsers.map(foundUser => User.with(foundUser));

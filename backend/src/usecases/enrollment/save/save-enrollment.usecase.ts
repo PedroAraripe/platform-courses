@@ -44,7 +44,7 @@ export class SaveEnrollmentUsecase implements Usecase<SaveEnrollmentInputDto, Sa
       
 
       if(createdEnrollment.wasUpserted) {
-        throw new AlreadyCreatedEntityError("Enrollment");
+        throw new AlreadyCreatedEntityError("Compra");
       }
       
       const output: SaveEnrollmentOutputDto = this.presentOutput(localEnrollment);

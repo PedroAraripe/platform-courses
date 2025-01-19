@@ -134,14 +134,14 @@ export function DataTable({
       </div>
 
       {
-            !isLoading ?
-            <DataTable
-              columns={currentCell.column.columnDef.subColumns}
-              title={`${currentCell.column.columnDef.subHeader} - ${currentRow.original[columns[0].accessorKey]}`}
-              data={subData}
-            /> : 
-            ""
-          }
+        !isLoading ?
+        <DataTable
+          columns={currentCell.column.columnDef.subColumns}
+          title={`${currentCell.column.columnDef.subHeader} - ${currentRow.original[columns[0].accessorKey]}`}
+          data={subData}
+        /> : 
+        ""
+      }
     </div>
   )
 }

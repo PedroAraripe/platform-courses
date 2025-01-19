@@ -37,7 +37,7 @@ export class CourseRepositoryPrisma implements CourseGateway {
     const foundCourse = await this.prismaClient.courses.findUnique({where: { id }})
 
     if(!foundCourse) {
-      throw new NotFoundError("Course");
+      throw new NotFoundError("Curso");
     }
 
     return Course.with(foundCourse);
@@ -53,7 +53,7 @@ export class CourseRepositoryPrisma implements CourseGateway {
     })
 
     if(!foundCourses.length) {
-      throw new NotFoundError("Courses");
+      throw new NotFoundError("Cursos");
     }
 
     return foundCourses.map(foundCourse => Course.with(foundCourse));

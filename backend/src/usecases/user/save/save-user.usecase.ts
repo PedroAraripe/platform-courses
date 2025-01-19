@@ -25,7 +25,7 @@ export class SaveUserUsecase implements Usecase<SaveUserInputDto, SaveUserOutput
     const userCreated = await this.userGateway.save(localUser);
 
     if(userCreated.wasUpserted) {
-      throw new AlreadyCreatedEntityError("User");
+      throw new AlreadyCreatedEntityError("Usuário");
     }
 
     const output: SaveUserOutputDto = this.presentOutput(localUser);

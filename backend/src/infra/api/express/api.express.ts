@@ -52,7 +52,7 @@ export class ApiExpress implements Api {
 
   private addNotFoundRoute(app: express.Express) {
     app.use((req, res, next) => {
-      GenericRouteErrorHandling.handle(res, new NotFoundError("Route")); 
+      GenericRouteErrorHandling.handle(res, new NotFoundError("Rota")); 
     })
   }
 }

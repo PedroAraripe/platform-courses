@@ -33,4 +33,4 @@ yarn-error.log*
 .env.production.local
 
 # database local
-dev.db
+*.db

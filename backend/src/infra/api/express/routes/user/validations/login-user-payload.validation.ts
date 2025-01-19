@@ -24,7 +24,7 @@ export class LoginUserPayloadValidations {
     }
 
     if(errorsDetails.length) {
-      throw new ValidationError("Some fields are missing or formatted incorrectly", errorsDetails)
+      throw new ValidationError("Alguns campos estão faltando ou estão mal formatados", errorsDetails)
     }
   }
 }
