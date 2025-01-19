@@ -13,8 +13,8 @@ O código-fonte está disponível no GitHub:
 
 ## Deploy na AWS
 
-- **Frontend**: [http://54.198.116.157:3000/](http://54.198.116.157:3000/)  
-- **Backend**: [http://54.198.116.157:5000/](http://54.198.116.157:5000/)
+- **Frontend**: [http://34.238.142.132:3000/](http://34.238.142.132:3000/)  
+- **Backend**: [http://34.238.142.132:5000/](http://34.238.142.132:5000/)
 
 ---
 
@@ -93,7 +93,8 @@ O código-fonte está disponível no GitHub:
 ```json
 {
   "title": "Curso Node.js",
-  "description": "Curso completo Node.js"
+  "description": "Curso completo Node.js",
+  "hours": 3
 }
 ```
 
@@ -184,7 +185,6 @@ O código-fonte está disponível no GitHub:
     "name": "João Silva",
     "createdAt": "2025-01-18T20:51:14.330Z",
     "email": "joao.silva@email.com",
-    "enrollments": []
   }
 ]
 ```
@@ -210,7 +210,6 @@ O código-fonte está disponível no GitHub:
  "name": "João Silva",
  "createdAt": "2025-01-18T20:51:14.330Z",
  "email": "joao.silva@email.com",
- "enrollments": []
 }
 ```
 
@@ -280,7 +279,8 @@ O código-fonte está disponível no GitHub:
 **Resposta**:
 
 ```json
-{
+[
+  {
    "id": "fb8fdb6f-92a4-4e3b-8d5e-4345df6bc3a6",
    "userId": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
    "courseId": "dfbe137e-80ac-4049-8e6b-2972ba5c0b9e",
@@ -298,7 +298,8 @@ O código-fonte está disponível no GitHub:
       "createdAt": "2025-01-18T20:51:14.330Z",
       "email": "joao.silva@email.com"
    }
-}
+  }
+]
 ```
 
 ---
