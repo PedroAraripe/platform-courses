@@ -1,8 +1,8 @@
 "use client"
 import Image from "next/image";
-import { DataTable as DataTableRecursive } from "./data-table" 
 import { formatDateToUserTz } from "../shared/utils/dateFormatters"
 import axios from "axios";
+import { getBaseUrlClient } from "../constants/server"
 
 import { useState } from "react";
 
@@ -20,12 +20,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { baseUrl } from "../constants/server";
+
 
 export function DataTable({
   columns,
   data,
-  title
+  title,
 }) {
   const table = useReactTable({
     data,
@@ -39,8 +39,10 @@ export function DataTable({
   
       setCurrentRow(row);
       setCurrentCell(cell);
+
+      console.log(getBaseUrlClient())
   
-      const { data } = await axios.get(`${baseUrl}/${cell.column.columnDef.subApiRoute}/${itemId}`);
+      const { data } = await axios.get(`${getBaseUrlClient()}/${cell.column.columnDef.subApiRoute}/${itemId}`);
   
       setSubData(data.map(c => ({
         ...c.course,
@@ -109,9 +111,11 @@ export function DataTable({
                             </div>:
                             
                             
-                            cell.column.columnDef.isDate ?
-                            formatDateToUserTz(row.original[cell.column.columnDef.accessorKey]) :
-                              flexRender(cell.column.columnDef.cell, cell.getContext())
+                            <div suppressHydrationWarning>
+                              {cell.column.columnDef.isDate ?
+                                formatDateToUserTz(row.original[cell.column.columnDef.accessorKey]) :
+                                flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            </div>
                         }
                       </TableCell>
                     ))}
@@ -130,7 +134,7 @@ export function DataTable({
 
         {
           !isLoading ?
-          <DataTableRecursive
+          <DataTable
             columns={currentCell.column.columnDef.subColumns}
             title={`${currentCell.column.columnDef.subHeader} - ${currentRow.original[columns[0].accessorKey]}`}
             data={subData}

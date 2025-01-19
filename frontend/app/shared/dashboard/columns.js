@@ -7,6 +7,10 @@ const columnCoursesBase = [
     accessorKey: "description",
     header: "Descrição",
   },
+  {
+    accessorKey: "hours",
+    header: "Duração (horas)",
+  },
 ]
 
 export const columnCourses = [

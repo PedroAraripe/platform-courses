@@ -32,7 +32,7 @@ export default async function Home() {
       isDate: true,
     },
     {
-      accessorKey: "_action_item",
+      accessorKey: "_check_more",
       header: "",
       subAccessorKey: ["enrollments", "course"],
       subHeader: "Cursos",
