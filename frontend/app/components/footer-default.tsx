@@ -3,7 +3,13 @@ import Link from 'next/link'
 
 export function FooterDefault() {
   return (
-    <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+    <nav
+      className="sticky max-md:w-full lg:px-4 py-5 bg-white border-black bottom-5 row-start-3 flex gap-3 lg:gap-6 flex-wrap items-center justify-center"
+      style={{
+        border: "1px solid HSL(240 5.9% 90%)",
+        minHeight: "fit-content",
+      }}
+    >
       <Link
         href="/"
         className="hover:underline hover:underline-offset-4 hover:cursor-pointer"
@@ -51,6 +57,6 @@ export function FooterDefault() {
           Compras
         </div>
       </Link>
-    </footer>
+    </nav>
   )
 }
