@@ -275,6 +275,7 @@ O código-fonte está disponível no GitHub:
 {
   "userId": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
 }
+```
 
 **Resposta**:
 
