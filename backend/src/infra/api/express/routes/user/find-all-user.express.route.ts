@@ -9,7 +9,6 @@ export type FindAllUserResponseDto = {
   name: string,
   id: string,
   createdAt: Date,
-  enrollments?: EnrollmentWithCourseDto[],
 }[];
 
 export class FindAllUserRoute implements Route {
@@ -56,7 +55,6 @@ export class FindAllUserRoute implements Route {
       name: user.name,
       createdAt: user.createdAt,
       email: user.email,
-      enrollments: user.enrollments
     }));
   }
 }

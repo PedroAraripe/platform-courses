@@ -63,10 +63,6 @@ export class EnrollmentRepositoryPrisma implements EnrollmentGateway {
       },
     })
 
-    if(!foundEnrollments?.length) {
-      throw new NotFoundError("Enrollments"); 
-    }
-
     return foundEnrollments.map(foundEnrollment => Enrollment.with({
       ...foundEnrollment,
       course: Course.with(foundEnrollment.course),

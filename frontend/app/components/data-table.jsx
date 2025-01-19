@@ -2,11 +2,11 @@
 import Image from "next/image";
 import { DataTable as DataTableRecursive } from "./data-table" 
 import { formatDateToUserTz } from "../shared/utils/dateFormatters"
+import axios from "axios";
 
 import { useState } from "react";
 
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -20,40 +20,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { baseUrl } from "../constants/server";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[],
-  title: string
-}
-
-function deepAccess(item, keys) {
-  let tempItem = item;
-  
-  keys.forEach(key => {
-    if(Array.isArray(tempItem)) {
-      tempItem = tempItem.map(subItem => subItem[key])
-    } else {
-      tempItem = tempItem[key]
-    }
-  })
-
-  return tempItem;
-}
-
-export function DataTable<TData, TValue>({
+export function DataTable({
   columns,
   data,
   title
-}: DataTableProps<TData, TValue>) {
+}) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
 
+  async function loadSubData(row, cell) {
+    try {
+      const itemId = row.original.id;
+  
+      setCurrentRow(row);
+      setCurrentCell(cell);
+  
+      const { data } = await axios.get(`${baseUrl}/${cell.column.columnDef.subApiRoute}/${itemId}`);
+  
+      setSubData(data.map(c => ({
+        ...c.course,
+        enrolledAt: c.enrolledAt
+      })));
+    } catch(e) {
+      setSubData([]);
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const [currentRow, setCurrentRow] = useState(null);
   const [currentCell, setCurrentCell] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [subData, setSubData] = useState([]);
 
   return (
     <div style={{maxWidth: "80vw"}}>
@@ -89,8 +93,7 @@ export function DataTable<TData, TValue>({
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell style={{minWidth: "85px"}} key={cell.id} onClick={cell.column.columnDef.subHeader ? () => {
-                        setCurrentRow(row);
-                        setCurrentCell(cell);
+                        loadSubData(row, cell);
                       } : () => {}}>
                         {
                           cell.column.columnDef.subHeader ?
@@ -126,11 +129,11 @@ export function DataTable<TData, TValue>({
         </div>
 
         {
-          currentRow && currentCell ?
+          !isLoading ?
           <DataTableRecursive
             columns={currentCell.column.columnDef.subColumns}
             title={`${currentCell.column.columnDef.subHeader} - ${currentRow.original[columns[0].accessorKey]}`}
-            data={deepAccess(currentRow.original, currentCell.column.columnDef.subAccessorKey)}
+            data={subData}
           /> : 
           ""
         }

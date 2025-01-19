@@ -7,6 +7,7 @@ export type FindCourseOutputDto = {
   title: string,
   description: string,
   createdAt: Date,
+  hours: number,
 }[];
 
 export class FindAllCourseUsecase implements Usecase<void, FindCourseOutputDto> {
@@ -28,6 +29,7 @@ export class FindAllCourseUsecase implements Usecase<void, FindCourseOutputDto> 
     return courses.map(course => ({
       id: course.id,
       title: course.title,
+      hours: course.hours,
       description: course.description,
       createdAt: course.createdAt,
     }))

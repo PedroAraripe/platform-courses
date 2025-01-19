@@ -9,7 +9,6 @@ export type FindUserOutputDto = {
   id: string,
   createdAt: Date,
   email: string,
-  enrollments?: EnrollmentWithCourseDto[],
 };
 
 export class FindByIdUserUsecase implements Usecase<FindByIdPayload, FindUserOutputDto> {
@@ -33,7 +32,6 @@ export class FindByIdUserUsecase implements Usecase<FindByIdPayload, FindUserOut
       name: user.name,
       email: user.email,
       createdAt: user.createdAt,
-      enrollments: user.enrollments,
     }
   }
 } 

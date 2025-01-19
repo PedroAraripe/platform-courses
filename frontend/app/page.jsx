@@ -4,7 +4,7 @@ import { DataTable } from "./components/data-table";
 
 import { FooterDefault } from "./components/footer-default";
 
-import { columnCourses } from "./shared/dashboard/columns.js"
+import { columnEnrolledCourses } from "./shared/dashboard/columns.js"
 
 import { baseUrl } from "./constants/server";
 
@@ -36,7 +36,8 @@ export default async function Home() {
       header: "",
       subAccessorKey: ["enrollments", "course"],
       subHeader: "Cursos",
-      subColumns: columnCourses
+      subColumns: columnEnrolledCourses,
+      subApiRoute: "enrollments"
     },
   ];
 

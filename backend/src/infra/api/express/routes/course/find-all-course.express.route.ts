@@ -8,6 +8,7 @@ export type FindAllCourseResponseDto = {
   title: string,
   description: string,
   createdAt: Date,
+  hours: number,
 }[];
 
 export class FindAllCourseRoute implements Route {
@@ -54,6 +55,7 @@ export class FindAllCourseRoute implements Route {
       title: course.title,
       description: course.description,
       createdAt: course.createdAt,
+      hours: course.hours,
     }));
   }
 }

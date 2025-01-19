@@ -57,10 +57,6 @@ export class User {
     return this.props?.wasUpserted;
   }
 
-  public get enrollments() {
-    return this.props.enrollments?.map(enrollment => enrollment.loadedCourseDto());
-  }
-
   static async generateHashPassword(password:string ) {
     return await PasswordHasherCrypt.execute(password);
   }
@@ -70,7 +66,6 @@ export class User {
       id: this.id,
       name: this.name,
       createdAt: this.createdAt,
-      enrollments: this.enrollments,
       email: this.email,
     };
   }
@@ -80,9 +75,7 @@ export class User {
       id: this.id,
       name: this.name,
       createdAt: this.createdAt,
-      enrollments: this.enrollments,
       email: this.email,
-      
     };
   }
 }

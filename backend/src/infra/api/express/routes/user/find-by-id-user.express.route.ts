@@ -3,14 +3,12 @@ import { HttpMethod, Route } from "../route";
 import { FindByIdUserUsecase } from "../../../../../usecases/user/find-by-id/find-by-id-user.usecase";
 import { RequiredIdFindByValidation } from "../../../../../shared/validations/required-id-find-by.validation";
 import { GenericRouteErrorHandling } from "../errors/generic-route-error-handling.error";
-import { EnrollmentWithCourseDto } from "../../../../../domain/enrollment/entity/enrollment";
 
 export type FindByIdUserResponseDto = {
   name: string,
   email: string,
   id: string,
   createdAt: Date,
-  enrollments?: EnrollmentWithCourseDto[],
 };
 
 export class FindByIdUserRoute implements Route {
@@ -61,7 +59,6 @@ export class FindByIdUserRoute implements Route {
       name: input.name,
       createdAt: input.createdAt,
       email: input.email,
-      enrollments: input.enrollments
     };
   
     return response;

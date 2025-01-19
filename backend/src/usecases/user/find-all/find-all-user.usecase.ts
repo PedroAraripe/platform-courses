@@ -8,7 +8,6 @@ export type FindUserOutputDto = {
   id: string,
   createdAt: Date,
   email: string,
-  enrollments?: EnrollmentWithCourseDto[],
 }[];
 
 export class FindAllUserUsecase implements Usecase<void, FindUserOutputDto> {
@@ -32,7 +31,6 @@ export class FindAllUserUsecase implements Usecase<void, FindUserOutputDto> {
       email: user.email,
       name: user.name,
       createdAt: user.createdAt,
-      enrollments: user.enrollments,
     }))
 
     return mappedUsers;

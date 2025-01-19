@@ -2,6 +2,8 @@ import { Api } from "../api";
 import express, { Express } from "express";
 import { Route } from "./routes/route";
 import cors from "cors";
+import { GenericRouteErrorHandling } from "./routes/errors/generic-route-error-handling.error";
+import { NotFoundError } from "../../../shared/errors/not-found.error";
 
 export class ApiExpress implements Api {
   private app: Express;
@@ -11,6 +13,7 @@ export class ApiExpress implements Api {
     this.app.use(cors());
     this.app.use(express.json());
     this.addRoutes(routes);
+    this.addNotFoundRoute(this.app);
   }
 
   public static create(routes: Route[]) {
@@ -45,5 +48,11 @@ export class ApiExpress implements Api {
       });
 
       console.log(routes);
+  }
+
+  private addNotFoundRoute(app: express.Express) {
+    app.use((req, res, next) => {
+      GenericRouteErrorHandling.handle(res, new NotFoundError("Route")); 
+    })
   }
 }

@@ -1,24 +1,28 @@
 import { Course } from "../../../domain/course/entity/course";
 import { CourseGateway } from "../../../domain/course/gateway/course.gateway";
-import { FindByIdPayload } from "../../../shared/types/find-by-id-payload.type";
 import { Usecase } from "../../usecase";
+
+type FindByUserIdPayload = {
+  userId: string,
+}
 
 export type FindCourseOutputDto = {
   id: string,
   title: string,
   description: string,
   createdAt: Date,
+  hours: number,
 };
 
-export class FindByIdCourseUsecase implements Usecase<FindByIdPayload, FindCourseOutputDto> {
+export class FindByUserIdCourseUsecase implements Usecase<FindByUserIdPayload, FindCourseOutputDto> {
   private constructor(private readonly courseGateway: CourseGateway) {}
 
   public static create(courseGateway: CourseGateway) {
-    return new FindByIdCourseUsecase(courseGateway);
+    return new FindByUserIdCourseUsecase(courseGateway);
   }
 
-  async execute({ id } : FindByIdPayload): Promise<FindCourseOutputDto> {
-      const foundCourse = await this.courseGateway.findById(id);
+  async execute({ userId } : FindByUserIdPayload): Promise<FindCourseOutputDto> {
+      const foundCourse = await this.courseGateway.findById(userId);
 
       const output: FindCourseOutputDto = this.presentOutput(foundCourse);
 
@@ -29,6 +33,7 @@ export class FindByIdCourseUsecase implements Usecase<FindByIdPayload, FindCours
     return {
       id: course.id,
       title: course.title,
+      hours: course.hours,
       description: course.description,
       createdAt: course.createdAt,
     };
