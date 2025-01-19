@@ -302,6 +302,31 @@ O código-fonte está disponível no GitHub:
 ```
 
 ---
+### **Errors**  
+**Descrição**: Formato padrão dos erros retornados pelas rotas.
+
+**Resposta**:
+
+```json
+{
+    "error": "ValidationError",
+    "statusCode": 400,
+    "message": "Some fields are missing or formatted incorrectly",
+    "details": [
+        {
+            "field": "name",
+            "message": "name is required"
+        },
+        {
+            "field": "password",
+            "message": "password is required"
+        }
+    ]
+}
+```
+Obs.: O campo "details" não está presente em todos os tipos de erros (atualmente está presente apenas nos erros de validação). 
+
+---
 
 ## Detalhes Técnicos
 
@@ -311,6 +336,7 @@ O código-fonte está disponível no GitHub:
 - **Prisma**: ORM para banco de dados.  
 - **Moment.js**: Manipulação de datas.  
 - **Node.js**: Plataforma de execução.  
+- **Arquitetura**: Foi aplicado conceitos de arquitetura limpa para a estrutura do sistema, com separação de entidades, usecases, infraestrutura etc.
 
 ### Frontend
 
