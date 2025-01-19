@@ -125,6 +125,33 @@ O código-fonte está disponível no GitHub:
 
 ---
 
+### **GET /courses/:id**  
+**Descrição**: Retorna o curso com id correspondente.  
+
+**Exemplo de Parâmetros**:
+
+```json
+{
+    "id": "1560d135-a4f4-4622-a3dc-7dd9bb4dd068"
+}
+```
+
+**Resposta**:
+
+```json
+[
+  {
+    "id": "1560d135-a4f4-4622-a3dc-7dd9bb4dd068",
+    "title": "Curso iniciante de Next",
+    "description": "Curso para iniciantes de Next",
+    "createdAt": "2025-01-18T21:09:19.300Z",
+    "hours": 12
+  }
+]
+```
+
+---
+
 ### **POST /users**  
 **Descrição**: Cria um usuário.  
 **Exemplo de Parâmetros**:
@@ -160,6 +187,31 @@ O código-fonte está disponível no GitHub:
     "enrollments": []
   }
 ]
+```
+
+---
+
+### **GET /users/:id**  
+**Descrição**: Retorna o usuário com id correspondente.  
+
+**Exemplo de Parâmetros**:
+
+```json
+{
+    "id": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4"
+}
+```
+
+**Resposta**:
+
+```json
+{
+ "id": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
+ "name": "João Silva",
+ "createdAt": "2025-01-18T20:51:14.330Z",
+ "email": "joao.silva@email.com",
+ "enrollments": []
+}
 ```
 
 ---
