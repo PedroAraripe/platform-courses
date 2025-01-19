@@ -3,10 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useToast } from "@/hooks/use-toast";
 
-import axios from "axios";
-import { getBaseUrlClient } from "../../constants/server";
+import { useSubmit } from "./useSubmit"
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 export function GenericForm({ requiredFields, requestPath, entityTitle }) {
-  const { toast } = useToast();
+  const { onSubmit } = useSubmit(requestPath);
 
   const zoidObjectForm = {};
 
@@ -51,28 +49,6 @@ export function GenericForm({ requiredFields, requestPath, entityTitle }) {
     resolver: zodResolver(formSchema),
     defaultValues,
   });
-
-  async function onSubmit(values) {
-    let message = "Criado com sucesso";
-    let hasFailed = false;
-
-    try {
-      await axios.post(`${getBaseUrlClient()}/${requestPath}`, values);
-    } catch (e) {
-      if (e?.response?.data?.message) {
-        message = e.response.data.message;
-      } else {
-        message = "Falha ao criar";
-      }
-      hasFailed = true;
-    } finally {
-      toast({
-        title: `${hasFailed ? "Erro" : "Sucesso"}`,
-        description: message,
-        variant: hasFailed ? "destructive" : "default",
-      });
-    }
-  }
 
   return (
     <Form {...form}>
