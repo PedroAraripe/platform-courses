@@ -216,6 +216,92 @@ O código-fonte está disponível no GitHub:
 
 ---
 
+### **POST /enrollments**  
+**Descrição**: Cria um histórico de compra de curso do usuário.  
+**Exemplo de Parâmetros**:
+
+```json
+{
+  "userId": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
+  "courseId": "dfbe137e-80ac-4049-8e6b-2972ba5c0b9e"
+}
+```
+
+**Resposta**:
+
+```json
+{
+  "id": "dfbe137e-80ac-4049-8e6b-2972ba5c0b9e"
+}
+```
+
+---
+
+### **GET /enrollments**  
+**Descrição**: Retorna os históricos de compras de cursos de todos os usuários.  
+**Resposta**:
+
+```json
+[
+   {
+      "id": "fb8fdb6f-92a4-4e3b-8d5e-4345df6bc3a6",
+      "userId": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
+      "courseId": "dfbe137e-80ac-4049-8e6b-2972ba5c0b9e",
+      "enrolledAt": "2025-01-18T21:13:20.067Z",
+      "course": {
+         "id": "dfbe137e-80ac-4049-8e6b-2972ba5c0b9e",
+         "title": "Node.js Básico",
+         "createdAt": "2025-01-18T21:06:25.864Z",
+         "description": "Curso completo de Node.js Básico",
+         "hours": 30
+      },
+      "user": {
+         "id": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
+         "name": "João Silva",
+         "createdAt": "2025-01-18T20:51:14.330Z",
+         "email": "joao.silva@email.com"
+      }
+   }
+]
+```
+
+---
+
+### **GET /enrollments/:userId**  
+**Descrição**: Retorna os históricos de compras de cursos de todos os usuários.
+**Exemplo de Parâmetros**:
+
+```json
+{
+  "userId": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
+}
+
+**Resposta**:
+
+```json
+{
+   "id": "fb8fdb6f-92a4-4e3b-8d5e-4345df6bc3a6",
+   "userId": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
+   "courseId": "dfbe137e-80ac-4049-8e6b-2972ba5c0b9e",
+   "enrolledAt": "2025-01-18T21:13:20.067Z",
+   "course": {
+      "id": "dfbe137e-80ac-4049-8e6b-2972ba5c0b9e",
+      "title": "Node.js Básico",
+      "createdAt": "2025-01-18T21:06:25.864Z",
+      "description": "Curso completo de Node.js Básico",
+      "hours": 30
+   },
+   "user": {
+      "id": "bf2aeb1b-9f86-45bc-bd4f-9cb62a6a9fd4",
+      "name": "João Silva",
+      "createdAt": "2025-01-18T20:51:14.330Z",
+      "email": "joao.silva@email.com"
+   }
+}
+```
+
+---
+
 ## Detalhes Técnicos
 
 ### Backend
