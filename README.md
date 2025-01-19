@@ -58,13 +58,15 @@ O código-fonte está disponível no GitHub:
      ```
 
    - **Manual (se preferir):**
-     - Suba o banco de dados PostgreSQL:
+     - Atualize o arquivo `schema.prisma` (se necessário) para usar **SQLite** no ambiente local, como abaixo:
+      
+      ```
+      datasource db {
+         provider = "sqlite"
+         url      = "file:./dev.db"
+      }
+      ```
 
-       ```bash
-       docker run --name plataforma-cursos-db -e POSTGRES_PASSWORD=prisma -d postgres
-       ```
-
-     - Atualize o arquivo `schema.prisma` (se necessário) para usar **SQLite** no ambiente local.
      - Execute o backend e o frontend separadamente:
 
        ```bash
