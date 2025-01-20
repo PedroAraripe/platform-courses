@@ -16,6 +16,7 @@ O código-fonte está disponível no GitHub:
 - **Frontend**: [http://34.238.142.132:3000/](http://34.238.142.132:3000/)  
 - **Backend**: [http://34.238.142.132:5000/](http://34.238.142.132:5000/)
 
+*Obs.:* É possível que demore um pouco para carregar inicialmente por conta da máquina escolhida na aws que possui recursos limitados.
 ---
 
 ## Instruções para Execução Local
